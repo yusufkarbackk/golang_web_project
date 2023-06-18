@@ -1,0 +1,29 @@
+<html>
+
+<head>
+    <title>HTML Form Example</title>
+</head>
+
+<body>
+    <form method="POST" action="/add-user">
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" required><br>
+
+        <label for="username">Email:</label>
+        <input type="email" name="email" id="email" required><br>
+
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" required><br>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    {{range .}}
+        <div>
+            <h3>Name: {{.Nama}}</h3>
+            <p>email: {{.Email}}</p>
+        </div>
+    {{end}}
+</body>
+
+</html>Ì
