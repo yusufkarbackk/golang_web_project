@@ -4,22 +4,14 @@ import (
 	"database/sql"
 	_ "github.com/go-sql-driver/mysql"
 	"golang_web_Project/database"
+	"golang_web_Project/model"
 	"log"
 	"time"
 )
 
-type User struct {
-	Id         int
-	Nama       string
-	Email      string
-	Password   string
-	Created_at time.Time
-	Updated_at sql.NullString
-}
+func GetUser() []model.User {
 
-func GetUser() []User {
-
-	users := []User{}
+	users := []model.User{}
 
 	db := database.MySqlConnection()
 	rows, err := db.Query("select * from users")
@@ -31,7 +23,7 @@ func GetUser() []User {
 
 	// Iterate over the query results
 	for rows.Next() {
-		var user User
+		var user model.User
 		var _createdAt string
 		var _updatedAt sql.NullString
 
@@ -54,4 +46,22 @@ func GetUser() []User {
 	// fmt.Println(users)
 
 	return users
+}
+
+func AddUser(data *model.User) {
+	db := database.MySqlConnection()
+
+	stmt, err := db.Prepare("INSERT INTO users (nama, email, password) VALUES (?, ?, ?)")
+	if err != nil {
+		panic(err)
+	}
+
+	// Execute the SQL statement with the user data
+	_, err = stmt.Exec(data.Nama, data.Email, data.Password)
+	if err != nil {
+		panic(err)
+	}
+	defer stmt.Close()
+	defer db.Close()
+
 }

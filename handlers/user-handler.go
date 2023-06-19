@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/julienschmidt/httprouter"
 	"golang_web_Project/database/user_service"
+	"golang_web_Project/model"
 	"html/template"
 	"net/http"
 )
@@ -25,6 +26,7 @@ func ShowFormHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params
 }
 
 func SubmitFormHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	var userData model.User
 	err := r.ParseForm()
 
 	if err != nil {
@@ -32,11 +34,11 @@ func SubmitFormHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Para
 		return
 	}
 
-	username := r.PostForm.Get("username")
-	password := r.PostForm.Get("password")
+	userData.Nama = r.PostForm.Get("username")
+	userData.Email = r.PostForm.Get("email")
+	userData.Password = r.PostForm.Get("password")
 
-	fmt.Println(username)
-	fmt.Println(password)
+	userservice.AddUser(&userData)
 
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }
