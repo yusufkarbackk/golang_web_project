@@ -6,7 +6,7 @@ import (
 	"golang_web_Project/database"
 	"golang_web_Project/model"
 	"log"
-	"time"
+	// "time"
 )
 
 func GetUser() []model.User {
@@ -32,12 +32,12 @@ func GetUser() []model.User {
 			log.Fatal(err)
 		}
 
-		if _updatedAt.Valid {
-			user.Updated_at = _updatedAt
-		}
+		// if _updatedAt.Valid {
+		// 	user.Updated_at = _updatedAt
+		// }
 
-		value, err := time.Parse("2006-01-02 15:04:05", _createdAt)
-		user.Created_at = value
+		// value, err := time.Parse("", _createdAt)
+		// user.Created_at = value
 
 		users = append(users, user)
 
@@ -50,16 +50,28 @@ func GetUser() []model.User {
 
 func AddUser(data *model.User) {
 	db := database.MySqlConnection()
-
-	stmt, err := db.Prepare("INSERT INTO users (nama, email, password) VALUES (?, ?, ?)")
+	tx, err := db.Begin()
 	if err != nil {
 		panic(err)
 	}
 
+	stmt, err := tx.Prepare("INSERT INTO users (nama, email, password) VALUES (?, ?, ?)")
+	if err != nil {
+		tx.Rollback()
+	}
+
+	defer stmt.Close()
+
 	// Execute the SQL statement with the user data
 	_, err = stmt.Exec(data.Nama, data.Email, data.Password)
 	if err != nil {
+		tx.Rollback()
 		panic(err)
+	}
+
+	err = tx.Commit()
+	if err != nil {
+		tx.Rollback()
 	}
 	defer stmt.Close()
 	defer db.Close()

@@ -1,8 +1,8 @@
 package model
 
 import (
-	"database/sql"
-	"time"
+	// "database/sql"
+	// "time"
 )
 
 type User struct {
@@ -10,6 +10,6 @@ type User struct {
 	Nama       string
 	Email      string
 	Password   string
-	Created_at time.Time
-	Updated_at sql.NullString
+	// Created_at time.Time
+	// Updated_at sql.NullString
 }

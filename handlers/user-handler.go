@@ -3,6 +3,7 @@ package handlers
 import (
 	"fmt"
 	"github.com/julienschmidt/httprouter"
+	"golang_web_Project/auth"
 	"golang_web_Project/database/user_service"
 	"golang_web_Project/model"
 	"html/template"
@@ -34,9 +35,14 @@ func SubmitFormHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Para
 		return
 	}
 
+	hashedPassword, error := auth.HashPassword(r.PostForm.Get("password"))
+	if err != nil {
+		panic(error)
+	}
+
 	userData.Nama = r.PostForm.Get("username")
 	userData.Email = r.PostForm.Get("email")
-	userData.Password = r.PostForm.Get("password")
+	userData.Password = hashedPassword
 
 	userservice.AddUser(&userData)
 

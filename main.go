@@ -17,6 +17,8 @@ func main() {
 
 	router.GET("/", handlers.IndexHandler)
 	router.GET("/about", handlers.AboutHandler)
+	router.GET("/login", handlers.ShowLoginForm)
+	router.POST("/login", handlers.SubmitLogin)
 	router.GET("/add-user", handlers.ShowFormHandler)
 	router.POST("/add-user", handlers.SubmitFormHandler)
 	router.ServeFiles("/static/*filepath", http.Dir("static"))
