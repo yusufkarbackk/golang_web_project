@@ -2,13 +2,13 @@ package handlers
 
 import (
 	"fmt"
+	"github.com/julienschmidt/httprouter"
 	"golang_web_Project/auth"
 	"golang_web_Project/database"
 	"golang_web_Project/model"
 	"html/template"
 	"net/http"
-
-	"github.com/julienschmidt/httprouter"
+	
 )
 
 func ShowLoginForm(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
@@ -43,23 +43,27 @@ func SubmitLogin(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	err = stmt.QueryRow(nama).Scan(&user.Id, &user.Nama, &user.Email, &user.Password)
 	if err != nil {
 		http.Redirect(w, r, "/", http.StatusSeeOther)
+		fmt.Println("username salah")
 		return
-	}
-
-	if user.Id > 0 {
+	} else {
 		fmt.Println("username benar")
 		isPasswordValid := auth.VerifyPassword(password, user.Password)
 
 		if isPasswordValid {
+			session, err := auth.Store.Get(r, "login_session")
+			if err != nil {
+				http.Redirect(w, r, "/", http.StatusSeeOther)
+				return
+			}
+			session.Values["authenticated"] = true
+
+			err = session.Save(r, w)
 			http.Redirect(w, r, "/", http.StatusSeeOther)
-			fmt.Println(user)
+			fmt.Println("login berhasil")
 		} else {
 			http.Redirect(w, r, "/", http.StatusSeeOther)
 			fmt.Println("password salah")
 		}
-	} else {
-		http.Redirect(w, r, "/", http.StatusSeeOther)
-		fmt.Print("username salah")
 	}
 }
 

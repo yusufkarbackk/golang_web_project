@@ -29,7 +29,7 @@ func MySqlConnection() *sql.DB {
 		log.Fatal(err)
 	}
 
-	fmt.Println("Connected to MySQL database!")
+	// fmt.Println("Connected to MySQL database!")
 
 	if err != nil {
 		log.Fatal(err)

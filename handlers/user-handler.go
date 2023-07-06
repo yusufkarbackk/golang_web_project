@@ -2,19 +2,18 @@ package handlers
 
 import (
 	"fmt"
-	"github.com/julienschmidt/httprouter"
 	"golang_web_Project/auth"
 	"golang_web_Project/database/user_service"
 	"golang_web_Project/model"
 	"html/template"
 	"net/http"
+
+	"github.com/julienschmidt/httprouter"
 )
 
 func ShowFormHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+
 	tmpl, err := template.ParseFiles("templates/user-form.html")
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
 
 	users := userservice.GetUser()
 	fmt.Println(users)
@@ -25,6 +24,22 @@ func ShowFormHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params
 		return
 	}
 }
+
+// if err != nil {
+// 	http.Redirect(w, r, "/", http.StatusSeeOther)
+// 	fmt.Println("Session habis")
+// } else {
+// 	fmt.Println("session valid")
+// 	fmt.Println(session)
+// 	fmt.Println(session.IsNew)
+// }
+
+// if session.IsNew {
+// 	fmt.Println("session valid")
+// 	fmt.Println(session)
+// } else {
+// 	fmt.Println("Session habis")
+// }
 
 func SubmitFormHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	var userData model.User
