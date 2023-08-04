@@ -9,7 +9,7 @@ func CreateSession() {
 
 	// Configure the session store options
 	Store.Options = &sessions.Options{
-		Path:     "/add-user",
+		Path:     "/",
 		MaxAge:   180, // session expiration time in seconds
 		HttpOnly: true,
 		Secure:   false, // set to true if using HTTPS

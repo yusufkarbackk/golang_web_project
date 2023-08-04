@@ -3,14 +3,15 @@ package main
 import (
 	"golang_web_Project/auth"
 	"golang_web_Project/handlers"
+
 	"golang_web_Project/middleware"
 	"log"
 	"net/http"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/julienschmidt/httprouter"
+	// "google.golang.org/api/option"
 )
-
 
 func main() {
 
@@ -18,13 +19,16 @@ func main() {
 	auth.CreateSession()
 	Store := auth.GetSession()
 
-	router.GET("/", handlers.IndexHandler)
-	router.GET("/about", handlers.AboutHandler)
+	router.ServeFiles("/assets/*filepath", http.Dir("assets"))
+	router.ServeFiles("/dashboard_assets/*filepath", http.Dir("dashboard_assets"))
+	router.GET("/", middleware.AuthMiddleware(handlers.IndexHandler, Store))
+	router.GET("/home", middleware.AuthMiddleware(handlers.IndexHandler, Store))
+	router.GET("/about", middleware.AuthMiddleware(handlers.AboutHandler, Store))
+	router.GET("/dashboard", middleware.AuthMiddleware(handlers.AboutHandler, Store))
 	router.GET("/login", handlers.ShowLoginForm)
-	router.POST("/login", handlers.SubmitLogin)
-	router.GET("/add-user", middleware.FormMiddleware(handlers.ShowFormHandler, Store))
+	router.POST("/send_login", handlers.SubmitLogin)
+	router.GET("/add-user", handlers.ShowFormHandler)
 	router.POST("/add-user", handlers.SubmitFormHandler)
-	router.ServeFiles("/static/*filepath", http.Dir("static"))
 
 	log.Println("server started on port:8000")
 	log.Fatal(http.ListenAndServe(":8000", router))

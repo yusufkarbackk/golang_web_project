@@ -9,20 +9,19 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-func FormMiddleware(next httprouter.Handle, store *sessions.CookieStore) httprouter.Handle {
+func AuthMiddleware(next httprouter.Handle, store *sessions.CookieStore) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 
 		session, err := store.Get(r, "login_session")
 		if err != nil {
-			http.Redirect(w, r, "/", http.StatusSeeOther)
+			http.Redirect(w, r, "/login", http.StatusSeeOther)
 			fmt.Println("Session error")
 		}
 
 		if auth, ok := session.Values["authenticated"].(bool); !ok || !auth {
-			http.Redirect(w, r, "/", http.StatusFound)
+			http.Redirect(w, r, "/login", http.StatusFound)
 			fmt.Println(auth)
 			fmt.Println(ok)
-			fmt.Println("session invalid")
 			return
 		}
 

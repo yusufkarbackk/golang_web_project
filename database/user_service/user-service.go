@@ -1,11 +1,15 @@
 package userservice
 
 import (
-	"database/sql"
-	_ "github.com/go-sql-driver/mysql"
+	"context"
 	"golang_web_Project/database"
 	"golang_web_Project/model"
 	"log"
+
+	"cloud.google.com/go/firestore"
+	firebase "firebase.google.com/go"
+	_ "github.com/go-sql-driver/mysql"
+	"google.golang.org/api/option"
 	// "time"
 )
 
@@ -14,7 +18,7 @@ func GetUser() []model.User {
 	users := []model.User{}
 
 	db := database.MySqlConnection()
-	rows, err := db.Query("select * from users")
+	rows, err := db.Query("select uuid, nik, nama, password, role, saldo from users")
 	if err != nil {
 		panic(err)
 	}
@@ -24,20 +28,11 @@ func GetUser() []model.User {
 	// Iterate over the query results
 	for rows.Next() {
 		var user model.User
-		var _createdAt string
-		var _updatedAt sql.NullString
 
-		err := rows.Scan(&user.Id, &user.Nama, &user.Email, &user.Password, &_createdAt, &_updatedAt)
+		err := rows.Scan(&user.Uuid, &user.Nik, &user.Nama, &user.Password, &user.Role, &user.Saldo)
 		if err != nil {
 			log.Fatal(err)
 		}
-
-		// if _updatedAt.Valid {
-		// 	user.Updated_at = _updatedAt
-		// }
-
-		// value, err := time.Parse("", _createdAt)
-		// user.Created_at = value
 
 		users = append(users, user)
 
@@ -55,7 +50,7 @@ func AddUser(data *model.User) {
 		panic(err)
 	}
 
-	stmt, err := tx.Prepare("INSERT INTO users (nama, email, password) VALUES (?, ?, ?)")
+	stmt, err := tx.Prepare("INSERT INTO users (nik, nama, password, saldo) VALUES (?, ?, ?, 100000)")
 	if err != nil {
 		tx.Rollback()
 	}
@@ -63,7 +58,7 @@ func AddUser(data *model.User) {
 	defer stmt.Close()
 
 	// Execute the SQL statement with the user data
-	_, err = stmt.Exec(data.Nama, data.Email, data.Password)
+	_, err = stmt.Exec(data.Nik, data.Nama, data.Password)
 	if err != nil {
 		tx.Rollback()
 		panic(err)
@@ -72,6 +67,30 @@ func AddUser(data *model.User) {
 	err = tx.Commit()
 	if err != nil {
 		tx.Rollback()
+	}
+
+	// Use a service account
+	ctx := context.Background()
+	conf := &firebase.Config{ProjectID: "para-pencari-jawaban"}
+
+	sa := option.WithCredentialsFile("./database/user_service/para-pencari-jawaban-firebase-adminsdk-vavad-075df6c140.json")
+	app, err := firebase.NewApp(ctx, conf, sa)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	client, err := app.Firestore(ctx)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	defer client.Close()
+
+	_, _, log_err := client.Collection("data").Add(ctx, map[string]interface{}{
+		"createdAt": firestore.ServerTimestamp,
+		"msg.log":   "add user",
+	})
+	if log_err != nil {
+		log.Fatalf("Failed adding alovelace: %v", err)
 	}
 	defer stmt.Close()
 	defer db.Close()

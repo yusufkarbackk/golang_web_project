@@ -6,11 +6,11 @@
 
 <body>
     <form method="POST" action="/add-user">
-        <label for="username">Username:</label>
-        <input type="text" name="username" id="username" required><br>
+        <label for="username">Nik:</label>
+        <input type="text" name="nik" id="nik" required><br>
 
-        <label for="username">Email:</label>
-        <input type="email" name="email" id="email" required><br>
+        <label for="username">Nama:</label>
+        <input type="text" name="nama" id="nama" required><br>
 
         <label for="password">Password:</label>
         <input type="password" name="password" id="password" required><br>
@@ -21,9 +21,9 @@
     {{range .}}
         <div>
             <h3>Name: {{.Nama}}</h3>
-            <p>email: {{.Email}}</p>
+            <p>Nik: {{.Nik}}</p>
         </div>
     {{end}}
 </body>
 
-</html>Ì
+</html>

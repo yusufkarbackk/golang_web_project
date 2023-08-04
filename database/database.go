@@ -12,7 +12,7 @@ func MySqlConnection() *sql.DB {
 	password := "root"
 	host := "localhost"
 	port := "8889"
-	database := "layar_tancep"
+	database := "bank_sampah"
 
 	// Create the MySQL connection string
 	connectionString := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", username, password, host, port, database)

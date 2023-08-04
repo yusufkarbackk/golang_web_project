@@ -55,8 +55,8 @@ func SubmitFormHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Para
 		panic(error)
 	}
 
-	userData.Nama = r.PostForm.Get("username")
-	userData.Email = r.PostForm.Get("email")
+	userData.Nama = r.PostForm.Get("nama")
+	userData.Nik = r.PostForm.Get("nik")
 	userData.Password = hashedPassword
 
 	userservice.AddUser(&userData)
