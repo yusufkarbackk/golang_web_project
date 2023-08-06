@@ -13,7 +13,7 @@ import (
 
 func ShowFormHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 
-	tmpl, err := template.ParseFiles("templates/user-form.html")
+	tmpl, err := template.ParseFiles("templates/tambahPengguna.html")
 
 	users := userservice.GetUser()
 	fmt.Println(users)

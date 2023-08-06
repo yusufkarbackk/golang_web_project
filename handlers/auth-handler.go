@@ -58,6 +58,7 @@ func SubmitLogin(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 			session.Values["nik"] = user.Nik
 			session.Values["role"] = user.Role
 			session.Values["saldo"] = user.Saldo
+			session.Values["nama"] = user.Nama
 			err = session.Save(r, w)
 
 			role, ok := session.Values["role"].(string)

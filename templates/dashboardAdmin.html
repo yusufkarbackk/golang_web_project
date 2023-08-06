@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Dashboard</title>
+  <title>Dashboard Admin</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -69,7 +69,7 @@
         <li class="nav-item dropdown pe-3">
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <span class="d-none d-md-block dropdown-toggle ps-2">{{.Nama}}</span>
+            <span class="d-none d-md-block dropdown-toggle ps-2">Yusuf Rafif Karback</span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -95,17 +95,17 @@
 
       <li class="nav-item">
         <a class="nav-link " href="index.html">
-          <i class="bi bi-currency-exchange"></i>
+          <i class="bi bi-database-exclamation"></i>
           <span>Saldo</span>
         </a>
       </li><!-- End Dashboard Nav -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" href="riwayat.html">
-          <i class="bi bi-calendar-event"></i>
-          <span>Riwayat</span>
+        <a class="nav-link collapsed" href="tambahPengguna.html">
+          <i class="bi bi-person"></i>
+          <span>Akun</span>
         </a>
-      </li><!-- End Dashboard Nav -->
+      </li>
 
       <li class="nav-item">
         <a class="nav-link collapsed" href="index.html">
@@ -119,15 +119,22 @@
 
   <main id="main" class="main">
 
-    <div class="pagetitle">
-      <h1>Dashboard</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item active">Dashboard cuy</li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
+    <div class="row">
+      <div class="pagetitle">
+        <h1>Dashboard Admin</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item active">Dashboard</li>
+          </ol>
+        </nav>
+      </div><!-- End Page Title -->
+      <form action="/tambah-user" method="get">
+        <button class="btn-info">
+          Tambah User
+        </button>
+      </form>
+    </div>
 
 
 
@@ -141,21 +148,26 @@
             <!-- Customers Card -->
             <div class="col-xxl-4 col-xl-12">
 
-              <div class="card info-card customers-card">
-                <div class="card-body">
-                  <h5 class="card-title">Saldo Anda <span></h5>
-
-                  <div class="d-flex align-items-center">
-                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
-                      <i class="bi bi-cash"></i>
-                    </div>
-                    <div class="ps-3">
-                      <h6>Rp {{.Saldo}}</h6>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nik</th>
+                    <th scope="col">Nama</th>
+                    <th scope="col">Saldo</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{range .Users}}
+                  <tr>
+                    <th scope="row">{{.Uuid}}</th>
+                    <td>{{.Nik}}</td>
+                    <td>{{.Nama}}</td>
+                    <td>{{.Saldo}}</td>
+                  </tr>
+                  {{end}}
+                </tbody>
+              </table>
 
             </div><!-- End Customers Card -->
 

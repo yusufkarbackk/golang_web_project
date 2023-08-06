@@ -13,12 +13,12 @@ import (
 	// "time"
 )
 
-func GetUser() []model.User {
+func GetUser() []model.UserNoPassword {
 
-	users := []model.User{}
+	users := []model.UserNoPassword{}
 
 	db := database.MySqlConnection()
-	rows, err := db.Query("select uuid, nik, nama, password, role, saldo from users")
+	rows, err := db.Query("select uuid, nik, nama, role, saldo from users")
 	if err != nil {
 		panic(err)
 	}
@@ -27,9 +27,9 @@ func GetUser() []model.User {
 
 	// Iterate over the query results
 	for rows.Next() {
-		var user model.User
+		var user model.UserNoPassword
 
-		err := rows.Scan(&user.Uuid, &user.Nik, &user.Nama, &user.Password, &user.Role, &user.Saldo)
+		err := rows.Scan(&user.Uuid, &user.Nik, &user.Nama, &user.Role, &user.Saldo)
 		if err != nil {
 			log.Fatal(err)
 		}

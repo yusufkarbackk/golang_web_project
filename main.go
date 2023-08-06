@@ -21,10 +21,12 @@ func main() {
 
 	router.ServeFiles("/assets/*filepath", http.Dir("assets"))
 	router.ServeFiles("/dashboard_assets/*filepath", http.Dir("dashboard_assets"))
+
 	router.GET("/", middleware.AuthMiddleware(handlers.IndexHandler, Store))
 	router.GET("/home", middleware.AuthMiddleware(handlers.IndexHandler, Store))
-	router.GET("/about", middleware.AuthMiddleware(handlers.AboutHandler, Store))
-	router.GET("/dashboard", middleware.AuthMiddleware(handlers.AboutHandler, Store))
+	// router.GET("/about", middleware.AuthMiddleware(handlers.AdminHandler, Store))
+	router.GET("/dashboard", middleware.AuthMiddleware(handlers.ShowUsersHandler, Store))
+	router.GET("/tambah-user", middleware.AuthMiddleware(handlers.ShowAddUserFormHandler, Store))
 	router.GET("/login", handlers.ShowLoginForm)
 	router.POST("/send_login", handlers.SubmitLogin)
 	router.GET("/add-user", handlers.ShowFormHandler)

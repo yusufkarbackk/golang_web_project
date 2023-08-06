@@ -13,3 +13,11 @@ type User struct {
 	Role     string
 	Saldo    int
 }
+
+type UserNoPassword struct {
+	Uuid  int
+	Nik   string
+	Nama  string
+	Role  string
+	Saldo int
+}
