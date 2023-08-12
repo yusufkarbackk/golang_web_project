@@ -13,12 +13,12 @@ import (
 	// "time"
 )
 
-func GetUser() []model.UserNoPassword {
+func GetUsers() []model.UserNoPassword {
 
 	users := []model.UserNoPassword{}
 
 	db := database.MySqlConnection()
-	rows, err := db.Query("select uuid, nik, nama, role, saldo from users")
+	rows, err := db.Query("select uuid, nik, nama, jenis_kelamin, alamat, role, saldo from users")
 	if err != nil {
 		panic(err)
 	}
@@ -29,7 +29,7 @@ func GetUser() []model.UserNoPassword {
 	for rows.Next() {
 		var user model.UserNoPassword
 
-		err := rows.Scan(&user.Uuid, &user.Nik, &user.Nama, &user.Role, &user.Saldo)
+		err := rows.Scan(&user.Uuid, &user.Nik, &user.Nama, &user.Jenis_kelamin, &user.Alamat, &user.Role, &user.Saldo)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -50,7 +50,7 @@ func AddUser(data *model.User) {
 		panic(err)
 	}
 
-	stmt, err := tx.Prepare("INSERT INTO users (nik, nama, password, saldo) VALUES (?, ?, ?, 100000)")
+	stmt, err := tx.Prepare("INSERT INTO users (nik, nama, jenis_kelamin, alamat, password, saldo) VALUES (?, ?, ?, ?, ?, 0)")
 	if err != nil {
 		tx.Rollback()
 	}
@@ -58,16 +58,17 @@ func AddUser(data *model.User) {
 	defer stmt.Close()
 
 	// Execute the SQL statement with the user data
-	_, err = stmt.Exec(data.Nik, data.Nama, data.Password)
+	_, err = stmt.Exec(data.Nik, data.Nama, data.Jenis_kelamin, data.Alamat, data.Password)
 	if err != nil {
 		tx.Rollback()
-		panic(err)
 	}
+	defer stmt.Close()
 
 	err = tx.Commit()
 	if err != nil {
 		tx.Rollback()
 	}
+	defer stmt.Close()
 
 	// Use a service account
 	ctx := context.Background()
@@ -95,4 +96,17 @@ func AddUser(data *model.User) {
 	defer stmt.Close()
 	defer db.Close()
 
+}
+
+func GetUser(uuid int) model.UserNoPassword {
+	user := model.UserNoPassword{}
+
+	db := database.MySqlConnection()
+	query := "select uuid, nik, nama, jenis_kelamin, alamat, role, saldo from users where uuid = ?"
+	err := db.QueryRow(query, uuid).Scan(&user.Uuid, &user.Nik, &user.Nama, &user.Jenis_kelamin, &user.Alamat, &user.Role, &user.Saldo)
+	if err != nil {
+		panic(err)
+	}
+
+	return user
 }

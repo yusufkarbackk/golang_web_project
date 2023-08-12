@@ -15,7 +15,7 @@ func ShowFormHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params
 
 	tmpl, err := template.ParseFiles("templates/tambahPengguna.html")
 
-	users := userservice.GetUser()
+	users := userservice.GetUsers()
 	fmt.Println(users)
 
 	err = tmpl.Execute(w, users)
@@ -57,9 +57,11 @@ func SubmitFormHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Para
 
 	userData.Nama = r.PostForm.Get("nama")
 	userData.Nik = r.PostForm.Get("nik")
+	userData.Jenis_kelamin = r.PostForm.Get("gender")
+	userData.Alamat = r.PostForm.Get("alamat")
 	userData.Password = hashedPassword
 
 	userservice.AddUser(&userData)
 
-	http.Redirect(w, r, "/", http.StatusSeeOther)
+	http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
 }

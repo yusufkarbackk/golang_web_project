@@ -6,18 +6,22 @@ import (
 )
 
 type User struct {
-	Uuid     int
-	Nik      string
-	Nama     string
-	Password string
-	Role     string
-	Saldo    int
+	Uuid          int
+	Nik           string
+	Nama          string
+	Jenis_kelamin string
+	Alamat        string
+	Password      string
+	Role          string
+	Saldo         int
 }
 
 type UserNoPassword struct {
-	Uuid  int
-	Nik   string
-	Nama  string
-	Role  string
-	Saldo int
+	Uuid          int
+	Nik           string
+	Nama          string
+	Role          string
+	Saldo         int
+	Jenis_kelamin string
+	Alamat        string
 }

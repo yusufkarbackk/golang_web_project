@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Favicons -->
+    <link href="assets/img/image.png" rel="icon" />
+    <link href="assets/img/image.png" rel="apple-touch-icon" />
+    <title>Edit Pengguna</title>
+    <!-- Include Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h2>Edit Pengguna</h2>
+
+      <div class="d-flex justify-content-end">
+        <a href="pengguna.html"><button class="btn btn-close"></button></a>
+      </div>
+
+      <form>
+        <div class="form-group">
+          <label for="text">Nama:</label>
+          <input
+            type="text"
+            class="form-control"
+            name="nama"
+            value="{{.Nama}}"
+            placeholder="{{.Nama}}"
+          />
+        </div>
+        <br />
+        <div class="form-group">
+          <label for="name">NIK:</label>
+          <input
+            type="number"
+            class="form-control"
+            name="nik"
+            placeholder="{{.Nik}}"
+            value="{{.Nik}}"
+          />
+        </div>
+        <br />
+        <label>Jenis Kelamin:</label>
+        {{if eq .Jenis_kelamin "Laki-laki" }}
+        <div class="form-check">
+          <input
+            type="radio"
+            class="form-check-input"
+            name="gender"
+            id="Laki-laki"
+            value="Laki-laki"
+            checked
+          />
+          <label class="form-check-label" for="Laki-laki">Laki-laki</label>
+        </div>
+        <div class="form-check">
+          <input
+            type="radio"
+            class="form-check-input"
+            name="gender"
+            id="Perempuan"
+            value="Perempuan"
+          />
+          <label class="form-check-label" for="Perempuan">Perempuan</label>
+        </div>
+        {{else}}
+        <div class="form-check">
+          <input
+            type="radio"
+            class="form-check-input"
+            name="gender"
+            id="Laki-laki"
+            value="Laki-laki"
+          />
+          <label class="form-check-label" for="Laki-laki">Laki-laki</label>
+        </div>
+        <div class="form-check">
+          <input
+            type="radio"
+            class="form-check-input"
+            name="gender"
+            id="Perempuan"
+            value="Perempuan"
+            checked
+          />
+          <label class="form-check-label" for="Perempuan">Perempuan</label>
+        </div>
+        {{end}}
+        <br />
+        <div class="form-group">
+          <label for="text">Alamat:</label>
+          <input
+            type="text"
+            class="form-control"
+            name="alamat"
+            placeholder="{{.Alamat}}"
+            value="{{.Alamat}}"
+          />
+        </div>
+        <br />
+        <div class="form-group"></div>
+        <div class="justify-content-md-between">
+          <button class="btn btn-primary me-md-2" type="submit">Kirim</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Include Bootstrap JS (optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>
