@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Favicons -->
+    <link href="assets/img/image.png" rel="icon" />
+    <link href="assets/img/image.png" rel="apple-touch-icon" />
+    <title>Tambah Saldo</title>
+    <!-- Include Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <h2>Tarik Saldo</h2>
+
+      <div class="d-flex justify-content-end">
+        <a href="saldo.html"><button class="btn btn-close"></button></a>
+      </div>
+
+      <form method="post" action="/withdraw">
+        <div class="dropdown">
+          <label for="dropdown">Identitas:</label>
+          <select id="dropdown" name="nik" required>
+            {{range .}}
+            <option value="{{.Nik}}">{{.Nik}} - {{.Nama}}</option>
+            {{end}}
+          </select>
+        </div>
+        <br />
+
+        <div class="form-group">
+          <label for="saldo">jumlah yang ingin ditarik:</label>
+          <input
+            required
+            type="number"
+            class="form-control"
+            placeholder="Masukan Jumlah"
+            name="jumlah"
+          />
+        </div>
+        <br />
+        <div class="form-group"></div>
+        <div class="justify-content-md-between">
+          <button class="btn btn-primary me-md-2" type="submit">Tarik Saldo</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- Include Bootstrap JS (optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

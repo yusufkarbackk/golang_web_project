@@ -13,35 +13,35 @@ import (
 	// "time"
 )
 
-func GetUsers() []model.UserNoPassword {
+// func GetUsers() []model.UserNoPassword {
 
-	users := []model.UserNoPassword{}
+// 	users := []model.UserNoPassword{}
 
-	db := database.MySqlConnection()
-	rows, err := db.Query("select uuid, nik, nama, jenis_kelamin, alamat, role, saldo from users")
-	if err != nil {
-		panic(err)
-	}
+// 	db := database.MySqlConnection()
+// 	rows, err := db.Query("select uuid, nik, nama, jenis_kelamin, alamat, role, saldo from users")
+// 	if err != nil {
+// 		panic(err)
+// 	}
 
-	defer rows.Close()
+// 	defer rows.Close()
 
-	// Iterate over the query results
-	for rows.Next() {
-		var user model.UserNoPassword
+// 	// Iterate over the query results
+// 	for rows.Next() {
+// 		var user model.UserNoPassword
 
-		err := rows.Scan(&user.Uuid, &user.Nik, &user.Nama, &user.Jenis_kelamin, &user.Alamat, &user.Role, &user.Saldo)
-		if err != nil {
-			log.Fatal(err)
-		}
+// 		err := rows.Scan(&user.Uuid, &user.Nik, &user.Nama, &user.Jenis_kelamin, &user.Alamat, &user.Role, &user.Saldo)
+// 		if err != nil {
+// 			log.Fatal(err)
+// 		}
 
-		users = append(users, user)
+// 		users = append(users, user)
 
-	}
+// 	}
 
-	// fmt.Println(users)
+// 	// fmt.Println(users)
 
-	return users
-}
+// 	return users
+// }
 
 func AddUser(data *model.User) {
 	db := database.MySqlConnection()
@@ -98,15 +98,15 @@ func AddUser(data *model.User) {
 
 }
 
-func GetUser(uuid int) model.UserNoPassword {
-	user := model.UserNoPassword{}
+// func GetUser(uuid int) model.UserNoPassword {
+// 	user := model.UserNoPassword{}
 
-	db := database.MySqlConnection()
-	query := "select uuid, nik, nama, jenis_kelamin, alamat, role, saldo from users where uuid = ?"
-	err := db.QueryRow(query, uuid).Scan(&user.Uuid, &user.Nik, &user.Nama, &user.Jenis_kelamin, &user.Alamat, &user.Role, &user.Saldo)
-	if err != nil {
-		panic(err)
-	}
+// 	db := database.MySqlConnection()
+// 	query := "select uuid, nik, nama, jenis_kelamin, alamat, role, saldo from users where uuid = ?"
+// 	err := db.QueryRow(query, uuid).Scan(&user.Uuid, &user.Nik, &user.Nama, &user.Jenis_kelamin, &user.Alamat, &user.Role, &user.Saldo)
+// 	if err != nil {
+// 		panic(err)
+// 	}
 
-	return user
-}
+// 	return user
+// }

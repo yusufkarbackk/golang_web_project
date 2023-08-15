@@ -1,29 +1,27 @@
 package handlers
 
 import (
-	"fmt"
 	"golang_web_Project/auth"
 	"golang_web_Project/database/user_service"
 	"golang_web_Project/model"
-	"html/template"
 	"net/http"
 
 	"github.com/julienschmidt/httprouter"
 )
 
-func ShowFormHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+// func ShowFormHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 
-	tmpl, err := template.ParseFiles("templates/tambahPengguna.html")
+// 	tmpl, err := template.ParseFiles("templates/tambahPengguna.html")
 
-	users := userservice.GetUsers()
-	fmt.Println(users)
+// 	// users := userservice.GetUsers()
+// 	// fmt.Println(users)
 
-	err = tmpl.Execute(w, users)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-}
+// 	// err = tmpl.Execute(w, users)
+// 	if err != nil {
+// 		http.Error(w, err.Error(), http.StatusInternalServerError)
+// 		return
+// 	}
+// }
 
 // if err != nil {
 // 	http.Redirect(w, r, "/", http.StatusSeeOther)

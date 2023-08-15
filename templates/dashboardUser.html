@@ -109,17 +109,17 @@
     <aside id="sidebar" class="sidebar">
       <ul class="sidebar-nav" id="sidebar-nav">
         <li class="nav-item">
-          <a class="nav-link" href="index.html">
-            <i class="bi bi-database-exclamation"></i>
-            <span>Saldo</span>
+          <a class="nav-link" href="/dashboard-user">
+            <i class="bi bi-person"></i>
+            <span>Pengguna</span>
           </a>
         </li>
         <!-- End Dashboard Nav -->
 
         <li class="nav-item">
-          <a class="nav-link collapsed" href="tambahPengguna.html">
-            <i class="bi bi-person"></i>
-            <span>Akun</span>
+          <a class="nav-link collapsed" href="/dashboard-transaksi">
+            <i class="bi bi-cash"></i>
+            <span>Transaksi</span>
           </a>
         </li>
 
@@ -169,7 +169,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    {{range .Users}}
+                    {{range .}}
                     <tr>
                       <td>{{.Nik}}</td>
                       <td>{{.Nama}}</td>
@@ -177,10 +177,8 @@
                       <td>{{.Alamat}}</td>
                       <td>{{.Saldo}}</td>
                       <td>
-                        <a
-                          class="btn btn-warning"
-                          href="/update-user?uuid={{.Uuid}}"
-                          ><i class="nav-icon fas fa-edit"></i> Edit</a
+                        <a class="btn btn-warning" href="#" role="button"
+                          ><i class="nav-icon fas fa-trash"></i> edit</a
                         >
                         <a
                           class="btn btn-danger"

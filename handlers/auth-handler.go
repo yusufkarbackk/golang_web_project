@@ -72,7 +72,7 @@ func SubmitLogin(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 				http.Redirect(w, r, "/home", http.StatusSeeOther)
 				fmt.Println("login berhasil sebagai user")
 			} else {
-				http.Redirect(w, r, "/dashboard", http.StatusSeeOther)
+				http.Redirect(w, r, "/dashboard-user", http.StatusSeeOther)
 				fmt.Println("login berhasil sebagai admin")
 			}
 
