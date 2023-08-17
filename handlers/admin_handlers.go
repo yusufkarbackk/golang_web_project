@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"golang_web_Project/auth"
 	"golang_web_Project/database"
-	// userservice "golang_web_Project/database/user_service"
 	"golang_web_Project/model"
 	"html/template"
 	"log"
@@ -33,6 +32,7 @@ func ShowUsersHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Param
 		var user model.UserNoPassword
 		err := rows.Scan(&user.Nik, &user.Nama, &user.Jenis_kelamin, &user.Alamat, &user.Saldo)
 		if err != nil {
+			http.Redirect(w, r, "/error", http.StatusSeeOther)
 			log.Fatal(err)
 		}
 		users = append(users, user)
@@ -45,7 +45,7 @@ func ShowUsersHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Param
 func ShowAddUserFormHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	baseTmpl, err := template.ParseFiles("templates/tambahPengguna.html")
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Redirect(w, r, "/error", http.StatusSeeOther)
 		return
 	}
 
@@ -73,13 +73,13 @@ func SubmitAddUserFormHandler(w http.ResponseWriter, r *http.Request, _ httprout
 	userData.Jenis_kelamin = r.PostForm.Get("gender")
 	userData.Alamat = r.PostForm.Get("alamat")
 	userData.Password = hashedPassword
-
+	fmt.Println(userData)
 	_, err = db.Exec("CALL InsertUser(?, ?, ?, ?, ?)", userData.Nik, userData.Nama, userData.Password, userData.Jenis_kelamin, userData.Alamat)
 	if err != nil {
+		http.Redirect(w, r, "/error", http.StatusSeeOther)
 		log.Fatal(err)
-		// redirect ke halaman error
 	}
-	http.Redirect(w, r, "/dashboard-user", http.StatusSeeOther)
+	http.Redirect(w, r, "/login", http.StatusSeeOther)
 }
 
 func ShowUpdateUserFormHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
@@ -93,7 +93,6 @@ func ShowUpdateUserFormHandler(w http.ResponseWriter, r *http.Request, _ httprou
 
 	// data := userservice.GetUser(id)
 	fmt.Println(id)
-	// err = baseTmpl.Execute(w, data)
 }
 
 func ShowTransactionsHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
@@ -115,7 +114,7 @@ func ShowTransactionsHandler(w http.ResponseWriter, r *http.Request, _ httproute
 		var transaction model.Transaction
 		err := rows.Scan(&transaction.Nik, &transaction.Nama, &transaction.Jenis_transaksi, &transaction.Jumlah, &rawTransactionDate)
 		if err != nil {
-			fmt.Println(transaction)
+			http.Redirect(w, r, "/error", http.StatusSeeOther)
 			log.Fatal(err)
 		}
 		transactionDateStr := string(rawTransactionDate)
@@ -143,6 +142,7 @@ func ShowAddDepositHandler(w http.ResponseWriter, r *http.Request, _ httprouter.
 		var user User
 		err := rows.Scan(&user.Nik, &user.Nama)
 		if err != nil {
+			http.Redirect(w, r, "/error", http.StatusSeeOther)
 			log.Fatal(err)
 		}
 		users = append(users, user)
@@ -171,10 +171,10 @@ func SubmitDepositHandler(w http.ResponseWriter, r *http.Request, _ httprouter.P
 	fmt.Println(berat)
 	_, depositErr := db.Exec("CALL Deposit(?, ?, ?)", nik, jumlah, berat)
 	if depositErr != nil {
+		http.Redirect(w, r, "/error", http.StatusSeeOther)
 		log.Fatal(err)
-		// redirect ke halaman error
 	}
-	
+
 	http.Redirect(w, r, "/dashboard-transaksi", http.StatusSeeOther)
 
 }
@@ -197,6 +197,7 @@ func ShowAddWithdrawFormHandler(w http.ResponseWriter, r *http.Request, _ httpro
 		var user User
 		err := rows.Scan(&user.Nik, &user.Nama)
 		if err != nil {
+			http.Redirect(w, r, "/error", http.StatusSeeOther)
 			log.Fatal(err)
 		}
 		users = append(users, user)
@@ -221,20 +222,19 @@ func SubmitWithdrawHandler(w http.ResponseWriter, r *http.Request, _ httprouter.
 	nik := r.Form.Get("nik")
 	jumlahstr := r.Form.Get("jumlah")
 	jumlah, err := strconv.Atoi(jumlahstr)
-	fmt.Println(jumlah)
+
 	err = db.QueryRow("CALL getUserSaldoForWithdraw(?)", nik).Scan(&saldo)
 	if err != nil {
 		if err == sql.ErrNoRows {
-			fmt.Println("No rows found")
+			http.Redirect(w, r, "/error", http.StatusSeeOther)
 		} else {
-			panic(err)
+			http.Redirect(w, r, "/error", http.StatusSeeOther)
 		}
 	}
-	fmt.Println(saldo)
 	if saldo >= jumlah {
 		_, err := db.Exec("CALL Withdraw(?, ?)", nik, jumlah)
 		if err != nil {
-			log.Fatal(err)
+			http.Redirect(w, r, "/error", http.StatusSeeOther)
 		}
 	} else {
 		fmt.Println("saldo tidak cukup")

@@ -1,8 +1,8 @@
 package model
 
 import (
-// "database/sql"
-// "time"
+	// "database/sql"
+	"time"
 )
 
 type User struct {
@@ -22,4 +22,12 @@ type UserNoPassword struct {
 	Jenis_kelamin string
 	Alamat        string
 	Saldo         int
+}
+
+type Data struct {
+	TransactionId   int
+	TransactionType string
+	Berat           int
+	Amount          int
+	TransactionDate time.Time
 }

@@ -1,104 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 
-<head>
-  <meta charset="utf-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Bank Sampah</title>
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
 
-  <title>Bank Sampah</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
+    <!-- Favicons -->
+    <link href="/assets/img/image.png" rel="icon" />
+    <link href="/assets/img/image.png" rel="apple-touch-icon" />
 
-  <!-- Favicons -->
-  <link href="/assets/img/image.png" rel="icon">
-  <link href="/assets/img/image.png" rel="apple-touch-icon">
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+      rel="stylesheet"
+    />
 
-  <!-- Google Fonts -->
-  <link
-    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Montserrat:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-    rel="stylesheet">
+    <!-- Vendor CSS Files -->
+    <link href="/assets/vendor/aos/aos.css" rel="stylesheet" />
+    <link
+      href="/assets/vendor/bootstrap/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="/assets/vendor/bootstrap-icons/bootstrap-icons.css"
+      rel="stylesheet"
+    />
+    <link
+      href="/assets/vendor/boxicons/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="/assets/vendor/glightbox/css/glightbox.min.css"
+      rel="stylesheet"
+    />
+    <link href="/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
 
-  <!-- Vendor CSS Files -->
-  <link href="/assets/vendor/aos/aos.css" rel="stylesheet">
-  <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="/assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <!-- Template Main CSS File -->
+    <link href="/assets/css/style.css" rel="stylesheet" />
 
-  <!-- Template Main CSS File -->
-  <link href="/assets/css/style.css" rel="stylesheet">
-
-  <!-- =======================================================
+    <!-- =======================================================
   * Template Name: Knight
   * Updated: May 30 2023 with Bootstrap v5.3.0
   * Template URL: https://bootstrapmade.com/knight-free-bootstrap-theme/
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
-</head>
+  </head>
 
-<body>
-
-  <!-- Section: Design Block -->
-  <section class="text-center">
-    <!-- Background image -->
-    <div class="p-5 bg-image" style=" margin-top: -70px;
+  <body>
+    <!-- Section: Design Block -->
+    <section class="text-center">
+      <!-- Background image -->
+      <div
+        class="p-5 bg-image"
+        style="
+          margin-top: -70px;
           background-image: url('https://mdbootstrap.com/img/new/textures/full/171.jpg');
           height: 300px;
-          "></div>
-    <!-- Background image -->
+        "
+      ></div>
+      <!-- Background image -->
 
-    <div class="card mx-4 mx-md-5 shadow-5-strong" style="
+      <div
+        class="card mx-4 mx-md-5 shadow-5-strong"
+        style="
           margin-top: -100px;
           background: hsla(0, 0%, 100%, 0.8);
           backdrop-filter: blur(30px);
-          ">
-      <form action="/send_login" method="post">
-        <div class="card-body py-5 px-md-5">
-          <div class="row d-flex justify-content-center">
-            <div class="col-lg-8">
-              <h2 class="fw-bold mb-5">Login cuy</h2>
-              <!-- 2 column grid layout with text inputs for the first and last names -->
-              <div class="row">
-                <div class="col-md-6 mb-4">
-                  <div class="form-outline">
-                    <input name="nik" type="text" id="form3Example2" class="form-control" />
-                    <label class="form-label" for="form3Example2">NIK Sesuai KTP</label>
+        "
+      >
+        <form action="/login" method="post">
+          <div class="card-body py-5 px-md-5">
+            <div class="row d-flex justify-content-center">
+              <div class="col-lg-8">
+                <h2 class="fw-bold mb-5">Login cuy</h2>
+                <!-- 2 column grid layout with text inputs for the first and last names -->
+                <div class="row">
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      <input
+                        name="nik"
+                        type="text"
+                        id="form3Example2"
+                        class="form-control"
+                      />
+                      <label class="form-label" for="form3Example2"
+                        >NIK Sesuai KTP</label
+                      >
+                    </div>
+                  </div>
+                  <div class="col-md-6 mb-4">
+                    <div class="form-outline">
+                      <input
+                        name="password"
+                        type="password"
+                        id="form3Example2"
+                        class="form-control"
+                      />
+                      <label class="form-label" for="form3Example2"
+                        >Password</label
+                      >
+                    </div>
                   </div>
                 </div>
-                <div class="col-md-6 mb-4">
-                  <div class="form-outline">
-                    <input name="password" type="password" id="form3Example2" class="form-control" />
-                    <label class="form-label" for="form3Example2">Password</label>
-                  </div>
-                </div>
+                <!-- Submit button -->
               </div>
-              <!-- Submit button -->
-
             </div>
           </div>
-        </div>
-        <button type="submit" class="btn btn-primary btn-block mb-4">
-          Login
-        </button>
-      </form>
+          <button type="submit" class="btn btn-primary btn-block mb-4">
+            Login
+          </button>
+        </form>
+        <a href="/add-user">Belum punya akun? Buat disini</a>
+      </div>
+    </section>
+    <!-- Section: Design Block -->
 
-    </div>
-  </section>
-  <!-- Section: Design Block -->
+    <!-- Vendor JS Files -->
+    <script src="/assets/vendor/aos/aos.js"></script>
+    <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+    <script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="/assets/vendor/php-email-form/validate.js"></script>
 
-  <!-- Vendor JS Files -->
-  <script src="/assets/vendor/aos/aos.js"></script>
-  <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-  <script src="/assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-  <script src="/assets/vendor/swiper/swiper-bundle.min.js"></script>
-  <script src="/assets/vendor/php-email-form/validate.js"></script>
-
-  <!-- Template Main JS File -->
-  <script src="/assets/js/main.js"></script>
-
-</body>
-
+    <!-- Template Main JS File -->
+    <script src="/assets/js/main.js"></script>
+  </body>
 </html>

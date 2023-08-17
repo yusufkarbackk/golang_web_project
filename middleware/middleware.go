@@ -24,25 +24,6 @@ func AuthMiddleware(next httprouter.Handle, store *sessions.CookieStore) httprou
 			fmt.Println(ok)
 			return
 		}
-
-		// if session.IsNew {
-		// 	http.Redirect(w, r, "/", http.StatusSeeOther)
-		// 	fmt.Println("Session habis 2")
-		// } else {
-		// 	fmt.Println("session valid")
-		// 	fmt.Println(session)
-		// 	fmt.Println(session.IsNew)
-		// 	tmpl, err := template.ParseFiles("templates/user-form.html")
-
-		// 	users := userservice.GetUser()
-		// 	fmt.Println(users)
-
-		// 	err = tmpl.Execute(w, users)
-		// 	if err != nil {
-		// 		http.Error(w, err.Error(), http.StatusInternalServerError)
-		// 		return
-		// 	}
-		// }
 		next(w, r, ps)
 	}
 }

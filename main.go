@@ -10,7 +10,6 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/julienschmidt/httprouter"
-	// "google.golang.org/api/option"
 )
 
 func main() {
@@ -31,11 +30,12 @@ func main() {
 	router.POST("/deposit", middleware.AuthMiddleware(handlers.SubmitDepositHandler, Store))
 	router.GET("/withdraw", middleware.AuthMiddleware(handlers.ShowAddWithdrawFormHandler, Store))
 	router.POST("/withdraw", middleware.AuthMiddleware(handlers.SubmitWithdrawHandler, Store))
-	router.GET("/add-user", middleware.AuthMiddleware(handlers.ShowAddUserFormHandler, Store))
-	router.POST("/add-user", middleware.AuthMiddleware(handlers.SubmitAddUserFormHandler, Store))
+	router.GET("/add-user", handlers.ShowAddUserFormHandler)
+	router.POST("/add-user", handlers.SubmitAddUserFormHandler)
 	router.GET("/update-user", middleware.AuthMiddleware(handlers.ShowUpdateUserFormHandler, Store))
 	router.GET("/login", handlers.ShowLoginForm)
-	router.POST("/send_login", handlers.SubmitLogin)
+	router.POST("/login", handlers.SubmitLogin)
+	router.GET("/error", handlers.ShowErrorPage)
 
 	log.Println("server started on port:8000")
 	log.Fatal(http.ListenAndServe(":8000", router))
