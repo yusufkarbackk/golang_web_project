@@ -33,8 +33,11 @@ func main() {
 	router.GET("/add-user", handlers.ShowAddUserFormHandler)
 	router.POST("/add-user", handlers.SubmitAddUserFormHandler)
 	router.GET("/update-user", middleware.AuthMiddleware(handlers.ShowUpdateUserFormHandler, Store))
+	router.PUT("/update-user", middleware.AuthMiddleware(handlers.SubmitUpdateUserHandler, Store))
+	router.POST("/delete-user", middleware.AuthMiddleware(handlers.DeleteUserHandler, Store))
 	router.GET("/login", handlers.ShowLoginForm)
 	router.POST("/login", handlers.SubmitLogin)
+	router.GET("/logout", middleware.AuthMiddleware(handlers.Logout, Store))
 	router.GET("/error", handlers.ShowErrorPage)
 
 	log.Println("server started on port:8000")

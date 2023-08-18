@@ -82,3 +82,12 @@ func SubmitLogin(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 		}
 	}
 }
+
+func Logout(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	session, _ := auth.Store.Get(r, "login_session")
+
+	session.Values["authenticated"] = false
+	session.Save(r, w)
+
+	fmt.Println("logout success")
+}

@@ -82,19 +82,40 @@ func SubmitAddUserFormHandler(w http.ResponseWriter, r *http.Request, _ httprout
 	http.Redirect(w, r, "/login", http.StatusSeeOther)
 }
 
-func ShowUpdateUserFormHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	// baseTmpl, err := template.ParseFiles("templates/editPengguna.html")
-	id, err := strconv.Atoi(r.URL.Query().Get("uuid"))
+func ShowUpdateUserFormHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	db := database.MySqlConnection()
+	var user model.UserNoPassword
+	queryParameters := r.URL.Query()
+	paramName := queryParameters.Get("nik")
+	err := r.ParseForm()
 
+	tmpl, err := template.ParseFiles("templates/editPengguna.html")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-
-	// data := userservice.GetUser(id)
-	fmt.Println(id)
+	row := db.QueryRow("CALL getUserData(?)", paramName)
+	row.Scan(&user.Nik, &user.Nama, &user.Jenis_kelamin, &user.Alamat, &user.Saldo)
+	err = tmpl.Execute(w, user)
 }
 
+func SubmitUpdateUserHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+}
+func DeleteUserHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
+	db := database.MySqlConnection()
+	err := r.ParseForm()
+	if err != nil {
+		http.Redirect(w, r, "/error", http.StatusSeeOther)
+	}
+	nik := r.PostForm.Get("nik")
+
+	_, deleteErr := db.Exec("CALL deleteUser(?)", nik)
+	if deleteErr != nil {
+		http.Redirect(w, r, "/error", http.StatusSeeOther)
+	}
+	http.Redirect(w, r, "/dashboard-user", http.StatusSeeOther)
+
+}
 func ShowTransactionsHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	db := database.MySqlConnection()
 	var rawTransactionDate []byte
