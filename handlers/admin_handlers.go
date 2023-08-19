@@ -148,7 +148,7 @@ func ShowTransactionsHandler(w http.ResponseWriter, r *http.Request, _ httproute
 func ShowAddDepositHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	db := database.MySqlConnection()
 	type User struct {
-		Nik  int
+		Nik  string
 		Nama string
 	}
 
@@ -203,7 +203,7 @@ func SubmitDepositHandler(w http.ResponseWriter, r *http.Request, _ httprouter.P
 func ShowAddWithdrawFormHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 	db := database.MySqlConnection()
 	type User struct {
-		Nik  int
+		Nik  string
 		Nama string
 	}
 
